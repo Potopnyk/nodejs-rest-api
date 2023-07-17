@@ -19,10 +19,10 @@ const getContactById = async contactId => {
 const addContact = async body => {
     const list = await listContacts(); 
     const newContact = {
-    
     id: nanoid(),
     ...body,
     };
+
     list.push(newContact); 
     await fs.writeFile(contactsPath, JSON.stringify(list, null, 2)); 
     return newContact; 
