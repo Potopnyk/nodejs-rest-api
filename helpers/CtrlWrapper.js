@@ -7,6 +7,6 @@ const CtrlWrapper = ctrl => {
         }
     };
     return func;
-}
+};
 
 module.exports = CtrlWrapper;
