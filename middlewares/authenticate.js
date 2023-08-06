@@ -5,7 +5,6 @@ require('dotenv').config();
 const { SECRET_KEY } = process.env;
 
 const { HttpErorrs } = require('../helpers'); 
-const CtrlWrapper = require('../helpers/CtrlWrapper');
 
 const authenticate = async (req, res, next) => {
     const { authorization = "" } = req.headers;
@@ -14,17 +13,17 @@ const authenticate = async (req, res, next) => {
     if (bearer !== 'Bearer') {
         throw HttpErorrs(401, 'Not authorized');
     }
-try {
+    try {
     const { id } = jwt.verify(token, SECRET_KEY);
     const user = await User.findById(id);
-
-    if (!user) {
-        throw HttpErorrs(401, 'Not authorized');
+    if (!user || !user.token || user.token !== token) {
+        next(HttpErorrs(401, 'Not authorized'));
     }
-    next();
+    req.user = user;
+    next(); 
     } catch {
     next(HttpErorrs(401, 'Not authorized'));
     }
 };
 
-module.exports = CtrlWrapper(authenticate); 
+module.exports = authenticate;
