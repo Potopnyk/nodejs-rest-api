@@ -1,9 +1,9 @@
 const { Schema, model } = require('mongoose'); 
 const { handleMongooseError } = require('../helpers');
-const { emailRegex } = require('../middlewares/schema');
+
 
 const subscriptionList = ['starter', 'pro', 'business'];
-
+const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 
 const userSchema = new Schema(
     {
@@ -32,6 +32,10 @@ const userSchema = new Schema(
             type: String,
             default: '',
         },
+        avatarURL: {
+        type: String,
+        required: true,
+    },
     },
     { versionKey: false },
 );
