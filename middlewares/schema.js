@@ -32,10 +32,15 @@ const changeSubscriptionSchema = Joi.object({
         .required(),
 });
 
+const emailSchema = Joi.object({
+    email: Joi.string().pattern(emailRegex).required(),
+});
+
 const schemas = {
     registerSchema,
     loginSchema,
     changeSubscriptionSchema,
+    emailSchema
 };
 
 module.exports = {
